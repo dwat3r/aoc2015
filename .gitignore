@@ -1,2 +1,5 @@
 .ammonite
 .metals
+.bloop
+target
+metals.sbt
