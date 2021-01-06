@@ -12,7 +12,7 @@ object d6 extends App {
   val test = """|turn on 0,0 through 999,999
                 |toggle 0,0 through 999,0
                 |turn off 499,499 through 500,500""".stripMargin('|')
-
+// part 1
   def parse(input: String) = {
     val line =
       raw"(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)".r.anchored
@@ -25,26 +25,34 @@ object d6 extends App {
   }
 
   def run(input: Array[Instr]) = {
-    val setting = input.foldLeft(Map[Pos, Boolean]()) { case (states, Instr(instr, p1, p2)) =>
+    val states = Array.fill(1000)(Array.fill(1000)(false))
+    input.foreach { case Instr(instr, p1, p2) =>
+      val range = ((p1.x to p2.x).toList, (p1.y to p2.y).toList)
       instr match {
-        case "turn on"  => states ++ List((p1, true), (p2, true))
-        case "turn off" => states ++ List((p1, false), (p2, false))
-        case "toggle" =>
-          states ++ List(
-            (p1, !states.getOrElse(p1, false)),
-            (p2, !states.getOrElse(p2, false))
-          )
+        case "turn on"  => range.mapN(states(_)(_) = true)
+        case "turn off" => range.mapN(states(_)(_) = false)
+        case "toggle"   => range.mapN((x,y) => states(x)(y) = !states(x)(y))
       }
     }
-   //setting
-    ((0 to 999).toList, (0 to 999).toList).mapN(Pos.apply)
-      .foldLeft((false,0)){ case ((st, acc), p) =>
-        setting.get(p) match {
-          case Some(nst) => if (nst) (nst, acc+1) else (nst, acc)
-          case None      => if (st) (st, acc+1) else (st, acc)
-        }
-      }
+   states.flatten.filter(identity).length
   }
 
-  println(run(parse(test)))//.mkString("\n"))
+
+  println(run(parse(input)))
+
+  // part 2
+  def run2(input: Array[Instr]) = {
+    val states = Array.fill(1000)(Array.fill(1000)(0))
+    input.foreach { case Instr(instr, p1, p2) =>
+      val range = ((p1.x to p2.x).toList, (p1.y to p2.y).toList)
+      instr match {
+        case "turn on"  => range.mapN((x,y) => states(x)(y) = states(x)(y)+1)
+        case "turn off" => range.mapN((x,y) => states(x)(y) = if (states(x)(y)-1 < 0) 0 else states(x)(y)-1)
+        case "toggle"   => range.mapN((x,y) => states(x)(y) = states(x)(y)+2)
+      }
+    }
+   states.flatten.sum
+  }
+
+  println(run2(parse(input)))
 }
