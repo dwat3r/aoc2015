@@ -1,4 +1,4 @@
-package aoc2015
+package aoc2015.d4
 
 import scala.annotation.tailrec
 import java.security.MessageDigest

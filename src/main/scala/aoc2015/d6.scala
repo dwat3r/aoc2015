@@ -1,4 +1,4 @@
-package aoc2015
+package aoc2015.d6
 
 import scala.io.Source
 import cats.implicits._
@@ -31,12 +31,11 @@ object d6 extends App {
       instr match {
         case "turn on"  => range.mapN(states(_)(_) = true)
         case "turn off" => range.mapN(states(_)(_) = false)
-        case "toggle"   => range.mapN((x,y) => states(x)(y) = !states(x)(y))
+        case "toggle"   => range.mapN((x, y) => states(x)(y) = !states(x)(y))
       }
     }
-   states.flatten.filter(identity).length
+    states.flatten.filter(identity).length
   }
-
 
   println(run(parse(input)))
 
@@ -46,12 +45,12 @@ object d6 extends App {
     input.foreach { case Instr(instr, p1, p2) =>
       val range = ((p1.x to p2.x).toList, (p1.y to p2.y).toList)
       instr match {
-        case "turn on"  => range.mapN((x,y) => states(x)(y) = states(x)(y)+1)
-        case "turn off" => range.mapN((x,y) => states(x)(y) = if (states(x)(y)-1 < 0) 0 else states(x)(y)-1)
-        case "toggle"   => range.mapN((x,y) => states(x)(y) = states(x)(y)+2)
+        case "turn on"  => range.mapN((x, y) => states(x)(y) = states(x)(y) + 1)
+        case "turn off" => range.mapN((x, y) => states(x)(y) = if (states(x)(y) - 1 < 0) 0 else states(x)(y) - 1)
+        case "toggle"   => range.mapN((x, y) => states(x)(y) = states(x)(y) + 2)
       }
     }
-   states.flatten.sum
+    states.flatten.sum
   }
 
   println(run2(parse(input)))

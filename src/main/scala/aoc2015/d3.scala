@@ -1,4 +1,4 @@
-package aoc2015
+package aoc2015.d3
 
 import scala.io.Source
 
@@ -29,7 +29,7 @@ object d3 extends App {
   run(parse(input))
 // second part
 
-  val test = "^v"
+  val test  = "^v"
   val test2 = "^>v<"
   val test3 = "^v^v^v^v^v"
 

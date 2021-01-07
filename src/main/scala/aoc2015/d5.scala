@@ -1,4 +1,4 @@
-package aoc2015
+package aoc2015.d5
 
 import scala.io.Source
 import scala.annotation.tailrec
@@ -40,16 +40,16 @@ object d5 extends App {
     if (rem.length < 2) return false
     else if (s.indexOf(rem.take(2)) > -1) {
       val first = s.indexOf(rem.take(2))
-      if (s.drop(first+2).indexOf(rem.take(2)) > -1) return true
+      if (s.drop(first + 2).indexOf(rem.take(2)) > -1) return true
     }
     two(s, rem.drop(1))
   }
 
   @tailrec
   final def three(rem: String): Boolean = rem.toList match {
-    case _ if (rem.length < 3) => false
+    case _ if (rem.length < 3)          => false
     case c :: _ :: c2 :: _ if (c == c2) => true
-    case _ => three(rem.drop(1))
+    case _                              => three(rem.drop(1))
   }
 
   def nice2(s: String): Boolean = {
