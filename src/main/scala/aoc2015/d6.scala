@@ -11,7 +11,7 @@ object d6 extends App {
 
   val test = """|turn on 0,0 through 999,999
                 |toggle 0,0 through 999,0
-                |turn off 499,499 through 500,500""".stripMargin('|')
+                |turn off 499,499 through 500,500""".stripMargin
 // part 1
   def parse(input: String) = {
     val line =

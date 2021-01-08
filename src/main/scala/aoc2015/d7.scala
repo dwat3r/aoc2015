@@ -19,7 +19,7 @@ object d7 extends App {
                |x LSHIFT 2 -> f
                |y RSHIFT 2 -> g
                |NOT x -> h
-               |NOT y -> i""".stripMargin('|')
+               |NOT y -> i""".stripMargin
 
   // first part
 
